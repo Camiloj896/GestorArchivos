@@ -1,0 +1,9 @@
+#impedir ingreso a las carpetas
+
+Options All -Indexes
+
+#URL Amigables
+
+RewriteEngine on
+
+RewriteRule ^(\w+)$ index.php?action=$1
