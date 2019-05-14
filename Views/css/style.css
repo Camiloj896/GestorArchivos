@@ -55,6 +55,8 @@ body{
     cursor: pointer;
 }
 
+/* ARCHIVO NUEVO */
+
 .Content-new-file{    
     display: flex;
     justify-content: center;
@@ -63,6 +65,10 @@ body{
     height: 80px;
     margin-bottom: 15px;
     border: 3px dotted #06990F;
+}
+
+#GuardarArchivo{
+    float: right;
 }
 
 /* NO SË XD */

@@ -15,7 +15,7 @@ class Ingreso{
                 "password" => $_POST["passwordIngreso"]
             );                  
 
-            //ENVIAR DATOS AL MODELO (VERIFICAR SI EL USUARIO EXISTE EN LA BASE)
+            //ENVIAR DATOS AL MODELO (VERIFICAR SI EL USUARIO EXISTE EN LA BASE
 
             $Res = IngresoModels::IngresoModel($DatosArray,"users");            
 
@@ -27,6 +27,7 @@ class Ingreso{
                 
                 $_SESSION["validar"] = true;
                 $_SESSION["Rol"] = $Res["Rol"];
+                $_SESSION["usuario"] = $Res["Nombre"];
                 
                 header("location:Archivos");
             

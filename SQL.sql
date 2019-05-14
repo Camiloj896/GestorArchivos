@@ -26,7 +26,8 @@ CREATE TABLE archivos(
     id int NOT NULL AUTO_INCREMENT,
     Nombre varchar(100),
     Tipo varchar(100),
-    Fecha varchar(100),
+    Fecha text,
+    Ruta Text,
     primary key(id)
 );
 
@@ -39,7 +40,7 @@ CREATE TABLE historial(
     Tipo varchar(100),
     Accion varchar(100),
     Usuario varchar(100),
-    Fecha varchar(100),
+    Fecha text,
     primary key(id)
 );
 

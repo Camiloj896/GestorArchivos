@@ -1,11 +1,63 @@
 <div class="card card-table">
 
+    <!-- HEADER ARCHIVOS
+    ---------------------------->
+
     <div class="card-header">
         <div class="header-new">
-            <a href="#New-File" class="text-success" data-toggle="modal"><i class="fas fa-plus"></i></a>
+            <!-- BOTON NUEVO ARCHIVO -->
+            <i class="fas fa-plus text-success" id="btn-nuevoAr"></i>
         </div>
-        <div class="title">Archivos</div>
+
+        <div class="title"><strong>Archivos</strong></div>
+
+        <div id="NuevoArchivo" style="display:none">
+
+            <hr>
+
+            <div class="alert alert-danger alerta text-center" id="AlertFile" style="display:none">Ya existe un archivo con este nombre</div>
+
+            <form enctype="multipart/form-data" method="POST" onsubmit="return ValidarArchivoNuevo()">
+                    
+                <div class="Content-new-file">
+                    <input type="file" value="Seleccionar" name="archivoNuevo" Required>
+                </div>
+
+                <div class="alert alert-info text-center">
+                    <strong>Formatos permitidos: </strong>(rar, pdf, docx, xlsx, txt, jpg, png)<br/><strong>Tamaño: </strong>(maximo 10 mb)
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-pencil-alt"></i></span>
+                    </div>
+                    <input type="text" class="form-control" name="nombreArchivo" placeholder="Nombre" aria-describedby="basic-addon1" Required>
+                </div>
+
+                <?php       
+                
+                #OBTENER NOMBRE DEL USUARIO
+                #---------------------------------------->
+
+                if (isset($_SESSION["validar"])) {
+                    echo '<input type="text" name="nombreUser" style="display:none" Value="'.$_SESSION["usuario"].'">';
+                }else{
+                    echo '<input type="text" name="nombreUser" style="display:none" Value="Anonimo">';
+                }
+
+                ?>                
+
+                <hr>
+
+                <button type="submit" id="GuardarArchivo" class="btn btn-outline-dark">Guardar</button>                
+
+            </form> 
+        </div>
+
     </div>
+
+    <!-- Lista de Archivos
+    ---------------------------->
 
     <div class="card-body table-responsive">
         <table class="table table-striped table-borderless">
@@ -20,42 +72,13 @@
                 </tr>
             </thead>
 
-            <tbody class="no-border-x">
-                <tr>
-                <td>Sony Xperia M4</td>
-                <td class="number">$149</td>
-                <td>Aug 23, 2018</td>
-                <td><i id="archivo1" class="fas fa-download download"></i></td>
-                <td></td>                    
-                </tr>
-                <tr>
-                <td>Apple iPhone 6</td>
-                <td class="number">$535</td>
-                <td>Aug 20, 2018</td>
-                <td class="text-success">Completed</td>
-                <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-                </tr>
-                <tr>
-                <td>Samsung Galaxy S7</td>
-                <td class="number">$583</td>
-                <td>Aug 18, 2018</td>
-                <td class="text-warning">Pending</td>
-                <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-                </tr>
-                <tr>
-                <td>HTC One M9</td>
-                <td class="number">$350</td>
-                <td>Aug 15, 2018</td>
-                <td class="text-warning">Pending</td>
-                <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-                </tr>
-                <tr>
-                <td>Sony Xperia Z5</td>
-                <td class="number">$495</td>
-                <td>Aug 13, 2018</td>
-                <td class="text-danger">Cancelled</td>
-                <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-                </tr>
+            <tbody class="no-border-x">                
+
+                <?php
+                    $Archivos = new GestorArchivosController();
+                    $Archivos->mostrarArchivosController();
+                ?>                
+
             </tbody>
 
         </table>
@@ -64,46 +87,7 @@
 
 </div>
 
-<!-- ARCHIVOS NUEVOS
---------------------------------------->
-
-<div id="New-File" class="modal fade">
-
-    <div class="modal-dialog modal-content">
-        
-        <!-- CERRAR MODAL -->
-
-        <div class="modal-header" style="border:1px solid #eee">            
-            
-            <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times"></i></button>                
-    
-        </div>
-
-        <div class="modal-body" style="border:1px solid #eee">
-            
-            <form enctype="multipart/form-data">
-                
-                <div class="Content-new-file">
-                    <input type="file" value="Seleccionar">
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-pencil-alt"></i></span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1">
-                </div>
-
-            </form>        
-            
-    
-        </div>
-
-        <div class="modal-footer" style="border:1px solid #eee">
-            
-            <button type="submit" class="btn btn-outline-dark">Guardar</button>                
-    
-        </div>
-        
-    </div>
-</div>
+<?php
+    $Archivos = new GestorArchivosController();
+    $Archivos->cargaArchivoController()
+?>

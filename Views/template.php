@@ -43,6 +43,6 @@
     <script src="Views/js/script.js"></script> 
     <script src="Views/js/Registro.js"></script> 
     <script src="Views/js/Validaringreso.js"></script>
-    <script src="Views/js/DescargaArchivos.js"></script>    
+    <script src="Views/js/GestorArchivos.js"></script>    
 </body>
 </html>
