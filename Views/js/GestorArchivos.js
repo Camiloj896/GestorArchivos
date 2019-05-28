@@ -56,28 +56,4 @@ function ValidarArchivoNuevo(){
 
 }
 
-//DESCARGAR ARCHIVO
-//---------------------------->
-
-$(".download").click( function(){
-    var id = $(this).attr("id");
-
-    var datos = new FormData();
-
-    datos.append("id", id);    
-
-    $.ajax({
-        url: "Views/Ajax/GestorArchivos.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,            
-        success: function(res){           
-            
-        }
-    })
-})
-
-
 

@@ -27,7 +27,8 @@ class Ingreso{
                 
                 $_SESSION["validar"] = true;
                 $_SESSION["Rol"] = $Res["Rol"];
-                $_SESSION["usuario"] = $Res["Nombre"];
+                $_SESSION["usuario"] = $Res["Nombre"];                                
+                $_SESSION["id"] = $Res["id"];   
                 
                 header("location:Archivos");
             

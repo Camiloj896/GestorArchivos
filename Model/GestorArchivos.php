@@ -82,5 +82,20 @@ class GestorArchivosModel{
 
     }
 
+     #MOSTRAR LOS DATOS DE TODOS LOS ARCHIVOS
+    #-------------------------------------------->
+    
+    public function InfoArchivosModel($tabla){
+
+        $stmt = Conexion::Conectar()->prepare("SELECT * FROM $tabla");       
+        
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt->close();
+        
+    }
+
 }
 

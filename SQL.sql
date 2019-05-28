@@ -16,6 +16,7 @@ CREATE TABLE users(
     Correo text,
     Pass varchar(100),
     Rol varchar(100),
+    Image text,
     primary key(id)
 );
 

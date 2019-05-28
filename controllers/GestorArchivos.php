@@ -6,45 +6,19 @@ class GestorArchivosController{
     #--------------------------------->
 
     public function mostrarArchivosController(){
-        
-        echo '
-            <tr>
-            <td>Sony Xperia M4</td>
-            <td class="number">$149</td>
-            <td>Aug 23, 2018</td>
-            <td><i id="archivo1" class="fas fa-download download"></i></td>
-            <td></td>                    
-            </tr>
-            <tr>
-            <td>Apple iPhone 6</td>
-            <td class="number">$535</td>
-            <td>Aug 20, 2018</td>
-            <td class="text-success">Completed</td>
-            <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-            </tr>
-            <tr>
-            <td>Samsung Galaxy S7</td>
-            <td class="number">$583</td>
-            <td>Aug 18, 2018</td>
-            <td class="text-warning">Pending</td>
-            <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-            </tr>
-            <tr>
-            <td>HTC One M9</td>
-            <td class="number">$350</td>
-            <td>Aug 15, 2018</td>
-            <td class="text-warning">Pending</td>
-            <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-            </tr>
-            <tr>
-            <td>Sony Xperia Z5</td>
-            <td class="number">$495</td>
-            <td>Aug 13, 2018</td>
-            <td class="text-danger">Cancelled</td>
-            <td class="actions"><a class="icon" href="#"><i class="mdi mdi-plus-circle-o"></i></a></td>
-            </tr>
-        ';
 
+        $res = GestorArchivosModel::InfoArchivosModel("archivos");
+
+        foreach ($res as $row => $item) {
+            echo '<tr>
+                    <td>'.$item["Nombre"].'</td>
+                    <td class="number">'.$item["Tipo"].'</td>
+                    <td>'.$item["Fecha"].'</td>
+                    <td><a href="controllers/GestorArchivos.php?file='.$item["id"].'"><i class="fas fa-download download"></i></a></td>
+                    <td></td>                    
+                  </tr>';
+        }
+    
     }
 
      #GUARDAR ARCHIVO
@@ -171,24 +145,20 @@ class GestorArchivosController{
     #DESCARGAR ARCHIVO
     #------------------------------------>
     
-    public function descargarArchivoController($idctr){
+    public function descargarArchivoController($idctr,$usuario){
                                
         #Obtener los datos del archivo a descargar
         #------------------------------------------->
 
-        $archivo = GestorArchivosModel::InfoArchivoModel($idctr, "archivos");                
+        require_once "./../Model/GestorArchivos.php";
+
+        $archivo = GestorArchivosModel::InfoArchivoModel($idctr, "archivos");                        
 
         #Obtener fecha actual
         #--------------------------->
 
         $fecha = date("Y-m-d H:i");  
-
-        #buscar archivo por el nombre
-        #---------------------------------------------->
-
-        #Descargar Archivo
-        #----------------------------->
-
+        
         #Guardar Registro de Descarga
         #-------------------------------->
 
@@ -196,20 +166,71 @@ class GestorArchivosController{
             "Nombre" => $archivo["Nombre"],
             "Tipo" => $archivo["Tipo"],
             "Accion" => "Descarga",
-            "Usuario" => $_SESSION["usuario"],
+            "Usuario" => $usuario,
             "Fecha" => $fecha
         );
 
-        $registro = GestorArchivosModel::GuardarRegistroModel($datosRegistro, "historial");             
+        $registro = GestorArchivosModel::GuardarRegistroModel($datosRegistro, "historial");  
 
-        #retornar respuesta  
-        #------------------------->        
+        #Obtener MINE para descargar el Archivo (TIPO)
+        #----------------------------------->
+
+        switch ($archivo["Tipo"]) {
+            #WINRAR
+            case "rar":
+                $Mine = "application/x-rar-compressed";
+                break;
+            #PDF
+            case "pdf":
+                $Mine = "application/pdf";
+                break;
+            #WORD
+            case "docx":
+                $Mine = "application/msword";
+                break;
+            #EXCEL
+            case "xlsx":
+                $Mine = "application/vnd.ms-excel";
+                break;
+            #TEXTO
+            case "txt":
+                $Mine = "text/plain";
+                break;
+            #JPEG
+            case "jpg":
+                $Mine = "image/jpeg";
+                break;
+            #PNG
+            case "png":
+                $Mine = "image/png";
+                break;
+        }     
+
+        #Descargar Archivo
+        #----------------------------->
+
+        $nombreArchivo = $archivo["Nombre"].".".$archivo["Tipo"];
         
-
+        header("Content-disposition: attachment; filename=".$nombreArchivo);
+        header("Content-type:".$Mine);
+        readfile("./../Content_Files/".$nombreArchivo);                                    
         
     }
 
    
 
+}
+
+if (isset($_GET["file"])){
+    session_start();
+    if(isset($_SESSION["usuario"])){
+        $UsuHistorial = $_SESSION["usuario"];
+    }else{
+        $UsuHistorial = "Anonimo";
+    }
+
+    $descarga = new GestorArchivosController();
+    $descarga-> descargarArchivoController($_GET["file"],$UsuHistorial);
+    
 }
 

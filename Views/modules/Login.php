@@ -19,8 +19,11 @@
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-                    </div>
-                    <input type="password" class="form-control" placeholder="Contraseña" id="passwordIngreso" name="passwordIngreso" required>
+                    </div>                                       
+                    <input type="password" class="form-control" placeholder="Contraseña" id="passwordIngreso" name="passwordIngreso" required>                    
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-eye" id="mostrarPass"></i></span>
+                    </div> 
                 </div>
 
                 <div>                    

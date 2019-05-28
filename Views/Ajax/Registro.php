@@ -18,6 +18,7 @@ class RegistroAjax{
             "Correo" => $this->Correo,
             "Pass" => $this->Pass,
             "Rol" => "User",
+            "Image" => "Views/images/Perfil/Default.png",
         );
 
         $res = RegistroController::GuardarDatosController($datos);

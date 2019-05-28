@@ -44,5 +44,6 @@
     <script src="Views/js/Registro.js"></script> 
     <script src="Views/js/Validaringreso.js"></script>
     <script src="Views/js/GestorArchivos.js"></script>    
+    <script src="Views/js/GestorPerfil.js"></script>        
 </body>
 </html>
